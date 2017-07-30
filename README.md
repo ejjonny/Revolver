@@ -34,6 +34,8 @@ Revolver can run on:
 
  - macOS
  - iOS
+ - tvOS
+ - watchOS
  - Linux (any distro capable of supporting the Swift runtime)
 
 Revolver can be compiled on:
@@ -45,6 +47,13 @@ If you for some reason need Swift 2 compatibility, check out the [swift-2.2][swi
 
 ## Installation
 There are several ways to get Revolver integrated with your project. You can choose the one that suits you best.
+
+### Using CocoaPods
+Just add the following line to your Podfile and run `pod install` in your shell.
+
+```ruby
+pod 'Revolver', '~> 1.2'
+```
 
 ### Using Swift Package Manager
 Just add Revolver as a dependency in your Package.swift, SPM will take care of the rest.
