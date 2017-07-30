@@ -34,7 +34,7 @@ Revolver can run on:
  - macOS
  - iOS
  - Linux (any distro capable of supporting the Swift runtime)
- 
+
 Revolver can be compiled on:
 
  - macOS
@@ -63,18 +63,18 @@ Listed in the increasing order of difficulty:
 struct MyChromosome: RangeInitializedArray {
     typealias Element = Bool
     static let initializationRange = 26...42
-    
+
     let array: [Element]    
     init(array: [Element]) { self.array = array }    
 }
 
 class MyEvaluator: SequentialEvaluator<MyChromosome> {
     typealias Chromosome = MyChromosome
-    
+
     override func evaluateChromosome(individual: Chromosome) -> Fitness {
         // TODO: Fill in the fitness function here.
         // You can return any Double between 0 and 1.
-        return 1.0 
+        return 1.0
     }    
 }
 
@@ -141,8 +141,8 @@ At the moment, there are no rules for contributing. However, before creating pul
 [html-doc]: Revolver/Documentation
 [thesis]: https://github.com/petrmanek/mff-bachelor-thesis
 
-[example-maxone]: ExampleMaxOne
-[example-knapsack]: ExampleKnapsack
-[example-parallel]: ExampleParallel
-[example-car]: ExampleCar
-[example-qwop]: ExampleQwop
+[example-maxone]: Examples/ExampleMaxOne
+[example-knapsack]: Examples/ExampleKnapsack
+[example-parallel]: Examples/ExampleParallel
+[example-car]: Examples/ExampleCar
+[example-qwop]: Examples/ExampleQwop
