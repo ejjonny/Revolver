@@ -19,6 +19,7 @@ Revolver is a framework for building fast genetic algorithms in [Swift 3.0][swif
 - [x] Well-documented API and many usage examples.
 - [x] Unit tests.
 
+
 ## Compatibility
 Revolver was built with the open-source implementation of Swift in mind. For that reason, a great deal of effort was put into making it compile on Linux.
 
@@ -41,6 +42,32 @@ Revolver can be compiled on:
  - Linux (any distro capable of supporting the Swift runtime)
 
 If you for some reason need Swift 2 compatibility, check out the [swift-2.2][swift-2.2-branch] branch. Fair warning though, the branch has been frozen and remains unmaintained.
+
+## Installation
+There are several ways to get Revolver integrated with your project. You can choose the one that suits you best.
+
+### Using Swift Package Manager
+Just add Revolver as a dependency in your Package.swift, SPM will take care of the rest.
+
+```swift
+let package = Package(
+    dependencies: [
+        // ... add this portion to your file:
+        .Package(url: "https://github.com/petrmanek/Revolver.git",
+                 majorVersion: 1),
+    ]
+)
+```
+
+### Using Xcode
+You will have to manually clone the project and its submodules.
+
+```bash
+git clone --recursive https://github.com/petrmanek/Revolver.git
+cd Revolver
+```
+
+Then, include *Revolver.xcodeproj* in your project.
 
 
 ## Documentation
