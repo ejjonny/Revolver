@@ -2,6 +2,7 @@
 
 [![Swift][swift-badge]][swift-url]
 [![Platform][platform-badge]][platform-url]
+[![CocoaPods][pod-badge]][pod-url]
 [![License][mit-badge]][mit-url]
 [![Travis][travis-badge]][travis-url]
 
@@ -45,38 +46,54 @@ Revolver can be compiled on:
 
 If you for some reason need Swift 2 compatibility, check out the [swift-2.2][swift-2.2-branch] branch. Fair warning though, the branch has been frozen and remains unmaintained.
 
+
 ## Installation
 There are several ways to get Revolver integrated with your project. You can choose the one that suits you best.
 
 ### Using CocoaPods
-Just add the following line to your Podfile and run `pod install` in your shell.
+[CocoaPods](http://cocoapods.org) is a dependency manager for Xcode projects. You can install it with the following command:
+
+```bash
+$ gem install cocoapods
+```
+
+To integrate Revolver into your Xcode project using CocoaPods, specify it in your `Podfile` by adding the following line in your dependency list:
 
 ```ruby
 pod 'Revolver', '~> 1.2'
 ```
 
-### Using Swift Package Manager
-Just add Revolver as a dependency in your Package.swift, SPM will take care of the rest.
+Then, run the following command:
+
+```bash
+$ pod install
+```
+
+
+### Swift Package Manager
+This method is recommended for *Pure Swift* projects on non-Apple platforms. Provided that you have already initialized your Package.swift file, you need to add Revolver as a dependency. That can be done by adding a line into the `dependencies` array as indicated below.
 
 ```swift
 let package = Package(
     dependencies: [
-        // ... add this portion to your file:
-        .Package(url: "https://github.com/petrmanek/Revolver.git",
-                 majorVersion: 1),
+        // ... add this line:
+        .Package(url: "https://github.com/petrmanek/Revolver.git", majorVersion: 1),
     ]
 )
 ```
 
-### Using Xcode
-You will have to manually clone the project and its submodules.
+During the first build of your package, SPM will download Revolver and resolve its dependencies.
+
+
+### Manually
+This method is the most challenging of all. If you prefer manual installation for some reason, you will have to clone the project and its submodules.
 
 ```bash
 git clone --recursive https://github.com/petrmanek/Revolver.git
 cd Revolver
 ```
 
-Then, include *Revolver.xcodeproj* in your project.
+Then, include *Revolver.xcodeproj* in your project as an embedded framework.
 
 
 ## Documentation
@@ -167,6 +184,8 @@ At the moment, there are no rules for contributing. However, before creating pul
 [mit-url]: https://tldrlegal.com/license/mit-license
 [travis-badge]: https://travis-ci.org/petrmanek/Revolver.svg?branch=master
 [travis-url]: https://travis-ci.org/petrmanek/Revolver
+[pod-badge]: https://img.shields.io/cocoapods/v/Revolver.svg
+[pod-url]: Revolver.podspec
 
 [petrmanek-url]: https://github.com/petrmanek
 [pull-requests]: https://github.com/petrmanek/Revolver/pulls
