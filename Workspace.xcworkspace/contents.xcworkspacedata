@@ -5,21 +5,21 @@
       location = "group:SwiftyJSON/SwiftyJSON.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Revolver/Revolver.xcodeproj">
+      location = "group:Revolver.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ExampleMaxOne/ExampleMaxOne.xcodeproj">
+      location = "group:Examples/ExampleMaxOne/ExampleMaxOne.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ExampleKnapsack/ExampleKnapsack.xcodeproj">
+      location = "group:Examples/ExampleKnapsack/ExampleKnapsack.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ExampleParallel/ExampleParallel.xcodeproj">
+      location = "group:Examples/ExampleParallel/ExampleParallel.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ExampleCar/ExampleCar.xcodeproj">
+      location = "group:Examples/ExampleCar/ExampleCar.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ExampleQwop/ExampleQwop.xcodeproj">
+      location = "group:Examples/ExampleQwop/ExampleQwop.xcodeproj">
    </FileRef>
 </Workspace>
