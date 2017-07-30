@@ -43,12 +43,12 @@ open class MersenneTwister: EntropyGenerator {
     fileprivate let N = 624
     fileprivate let M = 397
     fileprivate let MATRIX_A = 0x9908b0df   // constant vector a
-    fileprivate let UPPER_MASK = 0x80000000 // most significant w-r bits
-    fileprivate let LOWER_MASK = 0x7fffffff // least significant r bits
+    fileprivate let UPPER_MASK = Int(littleEndian: 0x80000000) // most significant w-r bits
+    fileprivate let LOWER_MASK = Int(littleEndian: 0x7fffffff) // least significant r bits
     
     // MARK: - Tempering parameters
-    fileprivate let TEMPERING_MASK_B = 0x9d2c5680
-    fileprivate let TEMPERING_MASK_C = 0xefc60000
+    fileprivate let TEMPERING_MASK_B = Int(littleEndian: 0x9d2c5680)
+    fileprivate let TEMPERING_MASK_C = Int(littleEndian: 0xefc60000)
     
     fileprivate func TEMPERING_SHIFT_U(_ y: Int) -> Int {
         return y >> 11

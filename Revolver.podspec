@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "Revolver"
-  s.version = "1.2.1"
+  s.version = "1.2.2"
   s.summary = "A framework for building fast genetic algorithms."
   s.description = <<-DESC
   Revolver is a framework for building fast genetic algorithms in Swift 3.0.
