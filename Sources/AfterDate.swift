@@ -1,4 +1,6 @@
 
+import Foundation
+
 /// Terminate the genetic algorithm after a point in time is reached.
 open class AfterDate<Chromosome: ChromosomeType>: TerminationCondition<Chromosome> {
     
