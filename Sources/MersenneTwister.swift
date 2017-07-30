@@ -1,125 +1,92 @@
 /*
 Not original code! (thankfully - who would bother reimplementing this?)
-- attribution goes to: http://stackoverflow.com/questions/2469031/open-source-implementation-of-mersenne-twister-in-python
-- transitive attribution goes to: http://code.activestate.com/lists/python-list/%3c200210290825.05022.shalehperry@attbi.com%3e/
-
-A C -> python -> swift translation of MT19937, original license below.
-
---
-A C-program for MT19937: Real number version
-genrand() generates one pseudorandom real number (double)
-which is uniformly distributed on [0,1]-interval, for each
-call. sgenrand(seed) set initial values to the working area
-of 624 words. Before genrand(), sgenrand(seed) must be
-called once. (seed is any 32-bit integer except for 0).
-Integer generator is obtained by modifying two lines.
-Coded by Takuji Nishimura, considering the suggestions by
-Topher Cooper and Marc Rieffel in July-Aug. 1997.
-
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Library General Public
-License as published by the Free Software Foundation; either
-version 2 of the License, or (at your option) any later
-version.
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the GNU Library General Public License for more details.
-You should have received a copy of the GNU Library General
-Public License along with this library; if not, write to the
-Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-02111-1307  USA
-
-Copyright (C) 1997 Makoto Matsumoto and Takuji Nishimura.
-Any feedback is very welcome. For any question, comments,
-see http://www.math.keio.ac.jp/matumoto/emt.html or email
-matumoto@math.keio.ac.jp
+ - attribution goes to: Kai Wells, http://kaiwells.me
+ - see Squall: https://github.com/quells/Squall/blob/master/Sources/Mersenne.swift
 --
 */
 
-/// Implementation of Mersenne Twister ported from Python.
+/// Multiply two `UInt32`'s and discard the overflow.
+///
+fileprivate func discardMultiply(_ a: UInt32, _ b: UInt32) -> UInt32 {
+    let ah = UInt64(a & 0xFFFF0000) >> 16
+    let al = UInt64(a & 0x0000FFFF)
+    let bh = UInt64(b & 0xFFFF0000) >> 16
+    let bl = UInt64(b & 0x0000FFFF)
+    
+    // Most significant bits overflow anyways, so don't bother
+    // let F  = ah * bh
+    let OI = ah * bl + al * bh
+    let L  = al * bl
+    
+    let result = (((OI << 16) & 0xFFFFFFFF) + L) & 0xFFFFFFFF
+    return UInt32(result)
+}
+
+/// Generates pseudo-random `UInt32`'s.
+///
+/// Uses the Mersenne Twister PRNG algorithm described [here](https://en.wikipedia.org/wiki/Mersenne_Twister).
+///
 open class MersenneTwister: EntropyGenerator {
-    // MARK: - Period parameters
-    fileprivate let N = 624
-    fileprivate let M = 397
-    fileprivate let MATRIX_A = 0x9908b0df   // constant vector a
-    fileprivate let UPPER_MASK = Int(littleEndian: 0x80000000) // most significant w-r bits
-    fileprivate let LOWER_MASK = Int(littleEndian: 0x7fffffff) // least significant r bits
+    internal typealias Element = Double
     
-    // MARK: - Tempering parameters
-    fileprivate let TEMPERING_MASK_B = Int(littleEndian: 0x9d2c5680)
-    fileprivate let TEMPERING_MASK_C = Int(littleEndian: 0xefc60000)
+    // Magic numbers
+    private let (w, n, m, r): (UInt32, Int, Int, UInt32) = (32, 624, 397, 31)
+    private let a: UInt32 = 0x9908B0DF
+    private let (u, d): (UInt32, UInt32) = (11, 0xFFFFFFFF)
+    private let (s, b): (UInt32, UInt32) = ( 7, 0x9D2C5680)
+    private let (t, c): (UInt32, UInt32) = (15, 0xEFC60000)
+    private let l: UInt32 = 18
+    private let f: UInt32 = 1812433253
     
-    fileprivate func TEMPERING_SHIFT_U(_ y: Int) -> Int {
-        return y >> 11
-    }
+    /// The maximum value an `UInt32` may take.
+    ///
+    internal let maxValue: UInt32 = 4294967295
     
-    fileprivate func TEMPERING_SHIFT_S(_ y: Int) -> Int {
-        return y << 7
-    }
+    private var state: [UInt32]
+    private var index = 0
     
-    fileprivate func TEMPERING_SHIFT_T(_ y: Int) -> Int {
-        return y << 15
-    }
-    
-    fileprivate func TEMPERING_SHIFT_L(_ y: Int) -> Int {
-        return y >> 18
-    }
-    
-    fileprivate var mt: [Int]
-    fileprivate var mti: Int
-    
-    // MARK: - Initialization
-    public init(seed: Int) {
-        mt = []
-        mti = N
-        sgenrand(seed)
-    }
-    
-    fileprivate func sgenrand(_ seed: Int) {
-        mt = []
-        
-        mt.append(seed & 0xffffffff)
-        for i in 1...N {
-            mt.append((69069 * mt[i-1]) & 0xffffffff)
+    /// Initialize the internal state of the generator.
+    ///
+    /// - parameter seed: The value used to generate the intial state. Should be chosen at random.
+    init(seed: UInt32 = 5489) {
+        var x = [seed]
+        for i in 1..<n {
+            let prev = x[i-1]
+            let c = discardMultiply(f, prev ^ (prev >> (w-2))) + UInt32(i)
+            x.append(c)
         }
-        
-        mti = N+1
+        self.state = x
     }
     
+    /// Puts the twist in Mersenne Twister.
+    ///
+    private func twist() {
+        for i in 0..<n {
+            let x = (state[i] & 0xFFFF0000) + ((state[(i+1) % n] % UInt32(n)) & 0x0000FFFF)
+            var xA = x >> 1
+            if (x % 2 != 0) {
+                xA = xA ^ a
+            }
+            state[i] = state[(i + m) % n] ^ xA
+            index = 0
+        }
+    }
+    
+    /// Provides the next `Double` in the sequence.
+    ///
+    /// Also modifies the internal state state array, twisting if necessary.
+    ///
     open func next() -> Double {
-        var mag01 = [0x0, MATRIX_A]
-        // mag01[x] = x * MATRIX_A  for x=0,1
-        var y = 0
+        if self.index > n { fatalError("Generator never seeded") }
+        if self.index == n { self.twist() }
         
-        if mti >= N { // generate N words at one time
-            if mti == N+1 {   // if sgenrand() has not been called,
-                sgenrand(4357) // a default initial seed is used
-            }
-            
-            for kk in 0...(N-M) {
-                y = (mt[kk]&UPPER_MASK)|(mt[kk+1]&LOWER_MASK)
-                mt[kk] = mt[kk+M] ^ (y >> 1) ^ mag01[y & 0x1]
-            }
-            
-            for kk in ((N-M) + 1)..<N {
-                y = (mt[kk]&UPPER_MASK)|(mt[kk+1]&LOWER_MASK)
-                mt[kk] = mt[kk+(M-N)] ^ (y >> 1) ^ mag01[y & 0x1]
-            }
-            
-            y = (mt[N-1]&UPPER_MASK)|(mt[0]&LOWER_MASK)
-            mt[N-1] = mt[M-1] ^ (y >> 1) ^ mag01[y & 0x1]
-            
-            mti = 0
-        }
+        var y = state[index]
+        y = y ^ ((y >> u) & d)
+        y = y ^ ((y << s) & b)
+        y = y ^ ((y << t) & c)
+        y = y ^ (y >> 1)
         
-        y = mt[mti]
-        mti += 1
-        y ^= TEMPERING_SHIFT_U(y)
-        y ^= TEMPERING_SHIFT_S(y) & TEMPERING_MASK_B
-        y ^= TEMPERING_SHIFT_T(y) & TEMPERING_MASK_C
-        y ^= TEMPERING_SHIFT_L(y)
-        
-        return Double(y) / 0xffffffff // reals
+        index += 1
+        return Double(y) / Double(UInt32.max)
     }
 }
