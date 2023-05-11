@@ -17,10 +17,10 @@ public enum FitnessKind {
 open class FitnessThreshold<Chromosome: ChromosomeType>: TerminationCondition<Chromosome> {
     
     /// The fitness value to reach.
-    open let fitness: Double
+    public let fitness: Double
     
     /// Type of fitness values, with which the constant is compared.
-    open let fitnessKind: FitnessKind
+    public let fitnessKind: FitnessKind
     
     /**
      Terminate the genetic algorithm after a certain fitness value is reached.

@@ -7,10 +7,10 @@ import Foundation
 open class ParallelEvaluator<Chromosome: ChromosomeType>: Evaluator<Chromosome> {
     
     /// Sequential threads used for parallel evaluation.
-    open let threads: [SequentialEvaluator<Chromosome>]
+    public let threads: [SequentialEvaluator<Chromosome>]
     
     /// Dispatch queues used to facilitate the execution of sequential evaluators.
-    open let queues: [OperationQueue]
+    public let queues: [OperationQueue]
     
     /**
      Instantiate a parallel evaluator with sequential evaluators.
@@ -59,7 +59,7 @@ open class ParallelEvaluator<Chromosome: ChromosomeType>: Evaluator<Chromosome> 
     }
     
     /// The recommended number of threads for parallel evaluation based on the current hardware.
-    open static var recommendedNumberOfThreads: Int {
+    public static var recommendedNumberOfThreads: Int {
         return ProcessInfo.processInfo.activeProcessorCount
     }
     

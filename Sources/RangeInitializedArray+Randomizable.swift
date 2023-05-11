@@ -8,7 +8,7 @@ extension RangeInitializedArray {
         if Self.initializationRange.lowerBound + 1 == Self.initializationRange.upperBound {
             size = Self.initializationRange.lowerBound
         } else {
-            size = generator.nextInRange(Range(Self.initializationRange))
+            size = generator.nextInRange(Self.initializationRange)
         }
 
         // Prepare the underlying data structure.

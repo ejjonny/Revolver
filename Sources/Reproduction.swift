@@ -2,7 +2,7 @@
 /// Reproduction copies individuals across generations, while maintaining their chromosome values without alteration.
 open class Reproduction<Chromosome: Reproducible>: GeneticOperator<Chromosome> {
     
-    open let numberOfIndividuals: Int
+    public let numberOfIndividuals: Int
     
     public init(_ selection: Selection<Chromosome>, numberOfIndividuals: Int = 1) {
         self.numberOfIndividuals = numberOfIndividuals

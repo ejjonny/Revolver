@@ -5,10 +5,10 @@
 open class AndCondition<Chromosome: ChromosomeType>: TerminationCondition<Chromosome> {
     
     /// The first operand of the AND operation.
-    open let firstOperand: TerminationCondition<Chromosome>
+    public let firstOperand: TerminationCondition<Chromosome>
     
     /// The second operand of the AND operation.
-    open let secondOperand: TerminationCondition<Chromosome>
+    public let secondOperand: TerminationCondition<Chromosome>
     
     /**
      Combine two termination conditions together by the AND operation.

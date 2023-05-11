@@ -49,7 +49,7 @@ class ArrayTests: XCTestCase {
         let ones2 = crossovered.second.array.reduce(0, +)
         let totalOnes = ones1 + ones2
         
-        XCTAssertEqualWithAccuracy(totalOnes, 42, accuracy: 1e-5)
+        XCTAssertEqual(totalOnes, 42, accuracy: 1e-5)
     }
     
     func testTwoPointCrossoverable() {
@@ -63,7 +63,7 @@ class ArrayTests: XCTestCase {
         let ones2 = crossovered.second.array.reduce(0, +)
         let totalOnes = ones1 + ones2
         
-        XCTAssertEqualWithAccuracy(totalOnes, 42, accuracy: 1e-5)
+        XCTAssertEqual(totalOnes, 42, accuracy: 1e-5)
     }
     
 }

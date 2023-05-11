@@ -3,7 +3,7 @@
 open class Individual<Chromosome: ChromosomeType>: Randomizable, FitnessType, ChromosomeType, Copyable {
     
     /// Genetic information of the individual.
-    open let chromosome: Chromosome
+    public let chromosome: Chromosome
     
     /// Fitness evaluation of the individual.
     open var fitness: Fitness?

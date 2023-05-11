@@ -3,10 +3,10 @@
 open class BinaryNode<LeftSideType: Randomizable, RightSideType: Randomizable, ResultType: Randomizable>: ValueNode<ResultType> {
     
     /// The first argument of the binary operation (can be also thought of as the left-hand side).
-    open let leftSide: ValueNode<LeftSideType>
+    public let leftSide: ValueNode<LeftSideType>
     
     /// The second argument of the binary operation (can be also though of as the right-hand side).
-    open let rightSide: ValueNode<RightSideType>
+    public let rightSide: ValueNode<RightSideType>
     
     /// Next-level descendant nodes of this node, not necessarily of the same type.
     public final override var treeNodeDescendants: [TreeNode] {

@@ -18,8 +18,16 @@ public protocol NumericType {
 // Surprise, surprise.
 // There are already many numeric types in Swift's standard library.
 
-extension Double : NumericType { }
-extension Float  : NumericType { }
+extension Double : NumericType {
+    public static func %(lhs: Self, rhs: Self) -> Self {
+        lhs.truncatingRemainder(dividingBy: rhs)
+    }
+}
+extension Float  : NumericType {
+    public static func %(lhs: Self, rhs: Self) -> Self {
+        lhs.truncatingRemainder(dividingBy: rhs)
+    }
+}
 extension Int    : NumericType { }
 extension Int8   : NumericType { }
 extension Int16  : NumericType { }

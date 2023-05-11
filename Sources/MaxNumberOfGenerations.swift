@@ -3,7 +3,7 @@
 open class MaxNumberOfGenerations<Chromosome: ChromosomeType>: TerminationCondition<Chromosome> {
     
     /// Number of generations to create.
-    open let generations: Int
+    public let generations: Int
     
     /**
      Terminate the genetic algorithm after a given number of generations is created.

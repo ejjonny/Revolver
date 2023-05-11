@@ -5,7 +5,7 @@ import Foundation
 open class AfterDate<Chromosome: ChromosomeType>: TerminationCondition<Chromosome> {
     
     /// Point in time, after which to terminate the algorithm.
-    open let date: Date
+    public let date: Date
     
     /**
      Terminate the genetic algorithm after a point in time is reached.

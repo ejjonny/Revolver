@@ -41,8 +41,8 @@ class EntropyGeneratorTests: XCTestCase {
                 let randomValue1: Double = generator.nextInRange(Range(val...val))
                 let randomValue2: Double = generator.nextInRange(min: Double(val), max: Double(val))
                 
-                XCTAssertEqualWithAccuracy(randomValue1, Double(val), accuracy: 1e-5)
-                XCTAssertEqualWithAccuracy(randomValue2, Double(val), accuracy: 1e-5)
+                XCTAssertEqual(randomValue1, Double(val), accuracy: 1e-5)
+                XCTAssertEqual(randomValue2, Double(val), accuracy: 1e-5)
             }
         }
     }

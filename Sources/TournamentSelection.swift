@@ -7,7 +7,7 @@ open class TournamentSelection<Chromosome: ChromosomeType>: Selection<Chromosome
     fileprivate var randomSelection: RandomSelection<Chromosome>
     
     /// Order of the tournament, also known as the *Tour*.
-    open let tournamentOrder: Int
+    public let tournamentOrder: Int
     
     /**
      Constructs new tournament selection object.

@@ -3,7 +3,7 @@
 open class UnaryNode<OperandType: Randomizable, ResultType: Randomizable>: ValueNode<ResultType> {
     
     /// Argument of the function.
-    open let operand: ValueNode<OperandType>
+    public let operand: ValueNode<OperandType>
     
     /// Next-level descendant nodes of this node, not necessarily of the same type.
     public final override var treeNodeDescendants: [TreeNode] {

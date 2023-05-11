@@ -7,7 +7,7 @@ public extension PersistentRangeInitializedArray {
         self.init(array: array)
     }
     
-    public func toJSON() -> JSON {
+    func toJSON() -> JSON {
         let jarray: [JSON] = array.map { $0.toJSON() }
         return JSON(jarray)
     }

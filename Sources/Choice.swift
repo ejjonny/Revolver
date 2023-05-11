@@ -3,7 +3,7 @@
 open class Choice<Chromosome: ChromosomeType>: GeneticOperatorNode<Chromosome> {
     
     /// Statistical probability of the choice.
-    open let probability: Double
+    public let probability: Double
     
     /**
      Instantiate new choice.

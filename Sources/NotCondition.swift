@@ -5,7 +5,7 @@
 open class NotCondition<Chromosome: ChromosomeType>: TerminationCondition<Chromosome> {
     
     /// The condition to invert.
-    open let operand: TerminationCondition<Chromosome>
+    public let operand: TerminationCondition<Chromosome>
     
     /**
      Invert a termination condition.
